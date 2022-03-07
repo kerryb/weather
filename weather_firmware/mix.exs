@@ -36,6 +36,9 @@ defmodule WeatherFirmware.MixProject do
       {:ring_logger, "~> 0.8.3"},
       {:toolshed, "~> 0.2.13"},
 
+      # Poncho dependencies
+      {:weather_ui, path: "../weather_ui", targets: @all_targets, env: Mix.env()},
+
       # Dependencies for all targets except :host
       {:nerves_runtime, "~> 0.11.6", targets: @all_targets},
       {:nerves_pack, "~> 0.6.0", targets: @all_targets},
