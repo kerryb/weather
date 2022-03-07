@@ -39,7 +39,7 @@ defmodule WeatherUi.MixProject do
       {:phoenix_live_view, "~> 0.17.5"},
       {:floki, ">= 0.30.0", only: :test},
       {:phoenix_live_dashboard, "~> 0.6"},
-      {:esbuild, "~> 0.3", runtime: Mix.env() == :dev},
+      {:esbuild, "~> 0.3", runtime: Mix.env() == :dev && Mix.target() == :host},
       {:telemetry_metrics, "~> 0.6"},
       {:telemetry_poller, "~> 1.0"},
       {:gettext, "~> 0.18"},
