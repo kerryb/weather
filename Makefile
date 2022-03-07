@@ -15,3 +15,6 @@ firmware: # Help: Build the firmware image
 help: # Help: Show this help message
 	@echo 'The following make targets are available.'
 	@sed -n 's/^\([^:]*:\).*# [H]elp: \(.*\)/"%-20s %s\\n" "\1" "\2"/p' Makefile | xargs -n 3 printf | sort	
+setup: # Help: Install required Erlang and Elixir versions, and Nerves bootstrap
+	asdf install
+	mix archive.install hex nerves_bootstrap
