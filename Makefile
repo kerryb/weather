@@ -1,5 +1,5 @@
-.PHONY: all assets burn clean deps firmware help setup
-all: deps assets firmware # Help: Fetch dependencies and build firmware
+.PHONY: all assets burn clean deps firmware help setup test
+all: deps test assets firmware # Help: Fetch dependencies and build firmware
 assets: # Help: Build web assets for UI app
 	cd weather_ui && mix assets.deploy
 burn: # Help: Burn the generated firmware to an SD card
@@ -18,3 +18,6 @@ help: # Help: Show this help message
 setup: # Help: Install required Erlang and Elixir versions, and Nerves bootstrap
 	asdf install
 	mix archive.install hex nerves_bootstrap
+test: # Help: Run tests in firmware and UI projects
+	cd weather_ui && mix test
+	cd weather_firmware && mix test
