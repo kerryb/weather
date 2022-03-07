@@ -1,4 +1,4 @@
-.PHONY: all
+.PHONY: all assets burn clean deps firmware help setup
 all: deps assets firmware # Help: Fetch dependencies and build firmware
 assets: # Help: Build web assets for UI app
 	cd weather_ui && mix assets.deploy
