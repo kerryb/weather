@@ -1,4 +1,4 @@
-.PHONY: all assets burn clean firmware help setup test
+.PHONY: all assets burn clean firmware help setup test update-deps
 all: test assets firmware # Help: Run tests and build firmware
 assets: # Help: Build web assets for UI app
 	cd weather_ui && mix assets.deploy
@@ -20,3 +20,6 @@ setup: # Help: Install dependencies
 test: # Help: Run tests in firmware and UI projects
 	cd weather_ui && mix test
 	cd weather_firmware && mix test
+update-deps: # Help: Update dependencies for firmware and UI projects
+	cd weather_ui && mix deps.update --all
+	cd weather_firmware && MIX_TARGET=rpi0 mix deps.update --all
