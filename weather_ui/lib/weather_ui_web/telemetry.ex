@@ -1,4 +1,8 @@
 defmodule WeatherUiWeb.Telemetry do
+  @moduledoc """
+  Generated Telemetry server for Phoenix application.
+  """
+
   use Supervisor
   import Telemetry.Metrics
 

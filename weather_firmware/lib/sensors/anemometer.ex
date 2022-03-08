@@ -1,4 +1,11 @@
 defmodule WeatherFirmware.Anemometer do
+  @moduledoc """
+  Interface to the Anemometer (wind speed sensor).
+
+  The sensor produces two pulses per revolution, and a frequency of 3 pulses
+  per second indicates a wind speed of 2m/s.
+  """
+
   use GenServer, start: {__MODULE__, :start_link, []}
   alias Circuits.GPIO
 

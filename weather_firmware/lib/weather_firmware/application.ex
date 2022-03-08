@@ -39,7 +39,7 @@ defmodule WeatherFirmware.Application do
     ]
   end
 
-  def target() do
+  def target do
     Application.get_env(:weather_firmware, :target)
   end
 end

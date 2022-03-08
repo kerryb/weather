@@ -31,6 +31,7 @@ defmodule WeatherFirmware.MixProject do
   defp deps do
     [
       # Dependencies for all targets
+      {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
       {:circuits_gpio, "~> 1.0"},
       {:nerves, "~> 1.7.15", runtime: false},
       {:shoehorn, "~> 0.8.0"},
