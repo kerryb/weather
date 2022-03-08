@@ -4,6 +4,7 @@ defmodule WeatherFirmware.Application do
   @moduledoc false
 
   use Application
+  alias WeatherFirmware.Anemometer
 
   @impl true
   def start(_type, _args) do
@@ -34,7 +35,7 @@ defmodule WeatherFirmware.Application do
     [
       # Children for all targets except host
       # Starts a worker by calling: WeatherFirmware.Worker.start_link(arg)
-      # {WeatherFirmware.Worker, arg},
+      Anemometer
     ]
   end
 

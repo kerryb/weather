@@ -31,6 +31,7 @@ defmodule WeatherFirmware.MixProject do
   defp deps do
     [
       # Dependencies for all targets
+      {:circuits_gpio, "~> 1.0"},
       {:nerves, "~> 1.7.15", runtime: false},
       {:shoehorn, "~> 0.8.0"},
       {:ring_logger, "~> 0.8.3"},
