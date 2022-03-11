@@ -22,6 +22,9 @@ defmodule WeatherFirmware.Anemometer do
     {:ok, %{input: input, last_pulse: 0, speed: 0}}
   end
 
+  @doc """.
+  Returns the latest windspeed reading, in m/s.
+  """
   def speed(name \\ __MODULE__) do
     GenServer.call(name, :speed)
   end
