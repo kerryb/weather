@@ -1,5 +1,5 @@
-.PHONY: all asdf assets bootstrap burn check-formatted clean credo deps format help setup test update-deps
-all: check-formatted credo test # Help: Run tests and other checks
+.PHONY: all asdf assets bootstrap burn check-formatted clean credo deps dialyzer format help setup test update-deps
+all: check-formatted credo dialyzer test # Help: Run tests and other checks
 asdf: # Help: Install correct Erlang/OTP and Elixir versions using asdf
 	asdf install
 assets: # Help: Build web assets for UI app
@@ -20,6 +20,9 @@ credo: # Help: Run credo style checker on firmware and UI projects
 deps: # Help: Download dependencies for firmware and UI projects
 	cd weather_ui && mix deps.get
 	cd weather_firmware && mix deps.get
+dialyzer: # Help: Run dialyxir on firmware and UI projects
+	cd weather_ui && mix dialyzer
+	cd weather_firmware && mix dialyzer
 format: # Help: Format all Elixir source files
 	cd weather_ui && mix format
 	cd weather_firmware && mix format

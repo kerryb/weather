@@ -39,6 +39,7 @@ defmodule WeatherFirmware.MixProject do
       # Dependencies for all targets
       {:circuits_gpio, "~> 1.0"},
       {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
+      {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
       {:nerves, "~> 1.7.15", runtime: false},
       {:ring_logger, "~> 0.8.3"},
       {:shoehorn, "~> 0.8.0"},
