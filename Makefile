@@ -11,9 +11,9 @@ burn: # Help: Burn the generated firmware to an SD card
 check-formatted: # Help: Check all Elixir source files are correctly formatted
 	cd weather_ui && mix format --check-formatted
 	cd weather_firmware && mix format --check-formatted
-clean: # Help: Clean firmware and UI projects
-	cd weather_ui && mix clean
-	cd weather_firmware && mix clean
+clean: # Help: Clean firmware and UI projects (dev and test environments)
+	cd weather_ui && mix clean && MIX_ENV=test mix clean
+	cd weather_firmware && mix clean && MIX_ENV=test mix clean
 credo: # Help: Run credo style checker on firmware and UI projects
 	cd weather_ui && mix credo --strict
 	cd weather_firmware && mix credo --strict

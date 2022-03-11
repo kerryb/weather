@@ -10,6 +10,7 @@ defmodule WeatherFirmware.MixProject do
       app: @app,
       version: @version,
       elixir: "~> 1.9",
+      elixirc_paths: elixirc_paths(Mix.env()),
       archives: [nerves_bootstrap: "~> 1.10"],
       start_permanent: Mix.env() == :prod,
       build_embedded: true,
@@ -27,13 +28,17 @@ defmodule WeatherFirmware.MixProject do
     ]
   end
 
+  # Specifies which paths to compile per environment.
+  defp elixirc_paths(:dev), do: ["lib", "test/support"]
+  defp elixirc_paths(:test), do: ["lib", "test/support"]
+  defp elixirc_paths(_), do: ["lib"]
+
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
       # Dependencies for all targets
       {:circuits_gpio, "~> 1.0"},
       {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
-      {:elixir_bme680, "~> 0.2.2"},
       {:nerves, "~> 1.7.15", runtime: false},
       {:ring_logger, "~> 0.8.3"},
       {:shoehorn, "~> 0.8.0"},
@@ -43,6 +48,7 @@ defmodule WeatherFirmware.MixProject do
       {:weather_ui, path: "../weather_ui", targets: @all_targets, env: Mix.env()},
 
       # Dependencies for all targets except :host
+      {:elixir_bme680, "~> 0.2.2", targets: @all_targets},
       {:nerves_pack, "~> 0.6.0", targets: @all_targets},
       {:nerves_runtime, "~> 0.11.6", targets: @all_targets},
 

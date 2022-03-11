@@ -1,4 +1,4 @@
-defmodule WeatherFirmware.Anemometer do
+defmodule WeatherFirmware.Sensors.Anemometer do
   @moduledoc """
   Interface to the Anemometer (wind speed sensor).
 
@@ -22,7 +22,7 @@ defmodule WeatherFirmware.Anemometer do
     {:ok, %{input: input, last_pulse: 0, speed: 0}}
   end
 
-  @doc """.
+  @doc """
   Returns the latest windspeed reading, in m/s.
   """
   def speed(name \\ __MODULE__) do
