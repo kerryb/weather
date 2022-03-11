@@ -1,12 +1,12 @@
-.PHONY: all asdf assets bootstrap burn check-formatted clean credo deps firmware format help setup test update-deps
-all: check-formatted credo test assets firmware # Help: Run tests and build firmware
+.PHONY: all asdf assets bootstrap burn check-formatted clean credo deps format help setup test update-deps
+all: check-formatted credo test # Help: Run tests and other checks
 asdf: # Help: Install correct Erlang/OTP and Elixir versions using asdf
 	asdf install
 assets: # Help: Build web assets for UI app
 	cd weather_ui && mix assets.deploy
 bootstrap: # Help: Install the nerves bootstrap archive
 	mix archive.install hex nerves_bootstrap
-burn: # Help: Burn the generated firmware to an SD card
+burn: assets # Help: Generate firmware and burn to an SD card
 	cd weather_firmware && MIX_TARGET=rpi0 mix firmware.burn
 check-formatted: # Help: Check all Elixir source files are correctly formatted
 	cd weather_ui && mix format --check-formatted
@@ -20,8 +20,6 @@ credo: # Help: Run credo style checker on firmware and UI projects
 deps: # Help: Download dependencies for firmware and UI projects
 	cd weather_ui && mix deps.get
 	cd weather_firmware && mix deps.get
-firmware: # Help: Build the firmware image
-	cd weather_firmware && MIX_TARGET=rpi0 mix firmware
 format: # Help: Format all Elixir source files
 	cd weather_ui && mix format
 	cd weather_firmware && mix format
