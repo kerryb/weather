@@ -1,6 +1,6 @@
-defmodule WeatherFirmware.AnemometerTest do
+defmodule WeatherFirmware.Sensors.AnemometerTest do
   use ExUnit.Case, async: true
-  alias WeatherFirmware.Anemometer
+  alias WeatherFirmware.Sensors.Anemometer
 
   @pin Application.compile_env!(:weather_firmware, :pins).anemometer
 
