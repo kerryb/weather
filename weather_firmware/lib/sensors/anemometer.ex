@@ -11,11 +11,12 @@ defmodule WeatherFirmware.Sensors.Anemometer do
 
   @pin Application.compile_env!(:weather_firmware, :pins).anemometer
 
+  @spec start_link(GenServer.name()) :: GenServer.on_start()
   def start_link(name \\ __MODULE__) do
     GenServer.start_link(__MODULE__, [], name: name)
   end
 
-  @impl true
+  @impl GenServer
   def init(_opts) do
     {:ok, input} = GPIO.open(@pin, :input)
     :ok = GPIO.set_interrupts(input, :falling)
@@ -25,16 +26,17 @@ defmodule WeatherFirmware.Sensors.Anemometer do
   @doc """
   Returns the latest windspeed reading, in m/s.
   """
+  @spec speed(GenServer.name()) :: float()
   def speed(name \\ __MODULE__) do
     GenServer.call(name, :speed)
   end
 
-  @impl true
+  @impl GenServer
   def handle_call(:speed, _sender, state) do
     {:reply, state.speed, state}
   end
 
-  @impl true
+  @impl GenServer
   def handle_info({:circuits_gpio, @pin, timestamp, 0}, state) do
     {:noreply,
      %{state | last_pulse: timestamp, speed: calculate_speed(state.last_pulse, timestamp)}}

@@ -15,8 +15,8 @@ clean: # Help: Clean firmware and UI projects (dev and test environments)
 	cd weather_ui && mix clean && MIX_ENV=test mix clean
 	cd weather_firmware && mix clean && MIX_ENV=test mix clean
 credo: # Help: Run credo style checker on firmware and UI projects
-	cd weather_ui && mix credo --strict
-	cd weather_firmware && mix credo --strict
+	cd weather_ui && mix credo --strict --all
+	cd weather_firmware && mix credo --strict --all
 deps: # Help: Download dependencies for firmware and UI projects
 	cd weather_ui && mix deps.get
 	cd weather_firmware && mix deps.get

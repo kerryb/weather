@@ -4,9 +4,10 @@ defmodule WeatherFirmware.Application do
   @moduledoc false
 
   use Application
-  alias WeatherFirmware.Sensors.{Anemometer, Environment}
+  alias WeatherFirmware.Sensors.Anemometer
+  alias WeatherFirmware.Sensors.Environment
 
-  @impl true
+  @impl Application
   def start(_type, _args) do
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
@@ -25,7 +26,7 @@ defmodule WeatherFirmware.Application do
   end
 
   # List all child processes to be supervised
-  def children(:host) do
+  defp children(:host) do
     [
       # Children that only run on the host
       # Starts a worker by calling: WeatherFirmware.Worker.start_link(arg)
@@ -33,14 +34,14 @@ defmodule WeatherFirmware.Application do
     ]
   end
 
-  def children(_target) do
+  defp children(_target) do
     [
       # Children for all targets except host
       # Starts a worker by calling: WeatherFirmware.Worker.start_link(arg)
     ]
   end
 
-  def target do
+  defp target do
     Application.get_env(:weather_firmware, :target)
   end
 end

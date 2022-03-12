@@ -1,3 +1,5 @@
+# credo:disable-for-this-file Credo.Check.Refactor.ModuleDependencies
+
 defmodule WeatherUiWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :weather_ui
 
