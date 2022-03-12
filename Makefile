@@ -7,7 +7,7 @@ assets: # Help: Build web assets for UI app
 bootstrap: # Help: Install the nerves bootstrap archive
 	mix archive.install hex nerves_bootstrap
 burn: assets # Help: Generate firmware and burn to an SD card
-	cd weather_firmware && MIX_TARGET=rpi0 mix firmware.burn
+	cd weather_firmware && MIX_ENV=prod MIX_TARGET=rpi0 mix firmware.burn
 check-formatted: # Help: Check all Elixir source files are correctly formatted
 	cd weather_ui && mix format --check-formatted
 	cd weather_firmware && mix format --check-formatted
