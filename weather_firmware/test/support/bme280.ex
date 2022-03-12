@@ -1,4 +1,4 @@
-defmodule Bme680 do
+defmodule Bme280 do
   @moduledoc """
   Dummy implementation of the main module from `elixir_bme680`, loaded in dev
   and test environments.
@@ -9,12 +9,12 @@ defmodule Bme680 do
     A copy of the data structure used by the real module.
     """
 
-    defstruct [:gas_resistance, :humidity, :pressure, :temperature]
+    defstruct [:humidity, :pressure, :temperature]
   end
 
   def start_link do
     Agent.start_link(fn ->
-      %Measurement{gas_resistance: 12_345, humidity: 78.90, pressure: 45.67, temperature: 12.34}
+      %Measurement{humidity: 78.90, pressure: 45.67, temperature: 12.34}
     end)
   end
 

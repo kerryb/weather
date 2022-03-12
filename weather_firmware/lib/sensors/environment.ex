@@ -1,6 +1,6 @@
 defmodule WeatherFirmware.Sensors.Environment do
   @moduledoc """
-  Interface to the BME680 environment sensor (temperature, humidity and
+  Interface to the BME280 environment sensor (temperature, humidity and
   pressure).
 
   The sensor is polled once a minute, and will return the latest stored values
@@ -9,7 +9,7 @@ defmodule WeatherFirmware.Sensors.Environment do
 
   use GenServer, start: {__MODULE__, :start_link, []}
 
-  alias Bme680.Measurement
+  alias Bme280.Measurement
 
   @refresh_interval :timer.minutes(1)
 
@@ -19,9 +19,9 @@ defmodule WeatherFirmware.Sensors.Environment do
 
   @impl true
   def init(_opts) do
-    {:ok, bme_680} = Bme680.start_link()
+    {:ok, bme_280} = Bme280.start_link()
     Process.send_after(self(), :update, @refresh_interval)
-    {:ok, %{bme_680: bme_680, measurement: Bme680.measure(bme_680)}}
+    {:ok, %{bme_280: bme_280, measurement: Bme280.measure(bme_280)}}
   end
 
   @doc """
@@ -60,7 +60,7 @@ defmodule WeatherFirmware.Sensors.Environment do
 
   @impl true
   def handle_info(:update, state) do
-    Bme680.measure_async(state.bme_680, self())
+    Bme280.measure_async(state.bme_280, self())
     Process.send_after(self(), :update, @refresh_interval)
     {:noreply, state}
   end

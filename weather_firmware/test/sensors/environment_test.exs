@@ -2,12 +2,12 @@ defmodule WeatherFirmware.Sensors.EnvironmentTest do
   @moduledoc """
   Test for WeatherFirmware,Sensors.Environment.
 
-  Uses the dummy Bme680 implementation in `test.support`.
+  Uses the dummy Bme280 implementation in `test.support`.
   """
 
   use ExUnit.Case, async: true
 
-  alias Bme680.Measurement
+  alias Bme280.Measurement
   alias WeatherFirmware.Sensors.Environment
 
   setup do
@@ -32,7 +32,6 @@ defmodule WeatherFirmware.Sensors.EnvironmentTest do
     sensor: sensor
   } do
     send(sensor, %Measurement{
-      gas_resistance: 10_000,
       humidity: 50.00,
       pressure: 40.00,
       temperature: 30.00
