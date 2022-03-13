@@ -11,26 +11,26 @@ AliExpress](https://www.aliexpress.com/item/1214985366.html)
 
 ### Wind speed
 
-[x] Write a server to interface with the anemometer
-[] Test with hardware
+- [x] Write a server to interface with the anemometer
+- [] Test with hardware
 
 ### Wind direction
 
-[] Write a server to interface with the wind vane
-[] Test with hardware
+- [] Write a server to interface with the wind vane
+- [] Test with hardware
 
 ### Rainfall
 
-[] Write a server to interface with the rain sensor
-[] Test with hardware
+- [] Write a server to interface with the rain sensor
+- [] Test with hardware
 
 ### Temperature/pressure/humidity
 
-[x] Read from BME280 sensor
-[x] Updates once a minute
+- [x] Read from BME280 sensor
+- [x] Updates once a minute
 
 ### UI
 
-[] Display current values
-[] Real time updates
-[] History
+- [] Display current values
+- [] Real time updates
+- [] History
