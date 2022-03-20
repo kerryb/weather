@@ -29,6 +29,9 @@ format: # Help: Format all Elixir source files
 help: # Help: Show this help message
 	@echo 'The following make targets are available.'
 	@sed -n 's/^\([^:]*:\).*# [H]elp: \(.*\)/"%-20s %s\\n" "\1" "\2"/p' Makefile | xargs -n 3 printf | sort	
+outdated: # Help: Check for outdated dependencies
+	cd weather_ui && mix hex.outdated
+	cd weather_firmware && mix hex.outdated
 test: # Help: Run tests in firmware and UI projects
 	cd weather_ui && mix test
 	cd weather_firmware && mix test
