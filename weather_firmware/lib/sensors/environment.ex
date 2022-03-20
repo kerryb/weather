@@ -3,15 +3,15 @@ defmodule WeatherFirmware.Sensors.Environment do
   Interface to the BME280 environment sensor (temperature, humidity and
   pressure).
 
-  The sensor is polled once a minute, and will return the latest stored values
-  when queried.
+  The sensor is polled every ten seconds, and will return the latest stored
+  values when queried.
   """
 
   use GenServer, start: {__MODULE__, :start_link, []}
 
   alias Bme280.Measurement
 
-  @refresh_interval :timer.minutes(1)
+  @refresh_interval :timer.seconds(10)
 
   @spec start_link(GenServer.name()) :: GenServer.on_start()
   def start_link(name \\ __MODULE__) do
