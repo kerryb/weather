@@ -49,6 +49,7 @@ defmodule WeatherFirmware.MixProject do
       {:weather_ui, path: "../weather_ui", targets: @all_targets, env: Mix.env()},
 
       # Dependencies for all targets except :host
+      {:circuits_spi, "~> 1.3", targets: @all_targets},
       {:elixir_bme680, "~> 0.2.2", targets: @all_targets},
       {:nerves_pack, "~> 0.6.0", targets: @all_targets},
       {:nerves_runtime, "~> 0.11.6", targets: @all_targets},
