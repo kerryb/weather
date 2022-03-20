@@ -12,7 +12,7 @@ AliExpress](https://www.aliexpress.com/item/1214985366.html)
 ### Wind speed
 
   - [x] Write a server to interface with the anemometer
-  - [ ] Test with hardware
+  - [x] Test with hardware
 
 ### Wind direction
 
@@ -27,7 +27,7 @@ AliExpress](https://www.aliexpress.com/item/1214985366.html)
 ### Temperature/pressure/humidity
 
   - [x] Read from BME280 sensor
-  - [x] Updates once a minute
+  - [x] Cache value and update regularly
 
 ### UI
 
