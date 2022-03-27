@@ -38,6 +38,7 @@ defmodule WeatherFirmware.MixProject do
     [
       # Dependencies for all targets
       {:circuits_gpio, "~> 1.0"},
+      {:circuits_spi, "~> 1.3"},
       {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
       {:nerves, "~> 1.7", runtime: false},
@@ -49,7 +50,6 @@ defmodule WeatherFirmware.MixProject do
       {:weather_ui, path: "../weather_ui", targets: @all_targets, env: Mix.env()},
 
       # Dependencies for all targets except :host
-      {:circuits_spi, "~> 1.3", targets: @all_targets},
       {:elixir_bme680, "~> 0.2", targets: @all_targets},
       {:nerves_pack, "~> 0.6", targets: @all_targets},
       {:nerves_runtime, "~> 0.11", targets: @all_targets},

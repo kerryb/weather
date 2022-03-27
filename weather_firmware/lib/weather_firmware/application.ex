@@ -6,6 +6,7 @@ defmodule WeatherFirmware.Application do
   use Application
   alias WeatherFirmware.Sensors.Anemometer
   alias WeatherFirmware.Sensors.Environment
+  alias WeatherFirmware.Sensors.WindVane
 
   @impl Application
   def start(_type, _args) do
@@ -19,7 +20,8 @@ defmodule WeatherFirmware.Application do
         # Starts a worker by calling: WeatherFirmware.Worker.start_link(arg)
         # {WeatherFirmware.Worker, arg},
         Anemometer,
-        Environment
+        Environment,
+        WindVane
       ] ++ children(target())
 
     Supervisor.start_link(children, opts)
