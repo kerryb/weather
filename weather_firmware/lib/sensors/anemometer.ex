@@ -1,6 +1,6 @@
 defmodule WeatherFirmware.Sensors.Anemometer do
   @moduledoc """
-  Interface to the Anemometer (wind speed sensor).
+  Interface to the anemometer (wind speed sensor).
 
   The sensor produces two pulses per revolution, and a frequency of 3 pulses
   per second indicates a wind speed of 2m/s.
