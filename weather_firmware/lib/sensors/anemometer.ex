@@ -42,9 +42,7 @@ defmodule WeatherFirmware.Sensors.Anemometer do
      %{state | last_pulse: timestamp, speed: calculate_speed(state.last_pulse, timestamp)}}
   end
 
-  def handle_info(_message, state) do
-    {:noreply, state}
-  end
+  def handle_info(_message, state), do: {:noreply, state}
 
   @nanoseconds_per_second 1_000_000_000
   @hz_to_metres_per_second 2 / 3

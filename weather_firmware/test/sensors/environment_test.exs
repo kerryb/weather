@@ -10,10 +10,10 @@ defmodule WeatherFirmware.Sensors.EnvironmentTest do
   alias Bme280.Measurement
   alias WeatherFirmware.Sensors.Environment
 
-  setup do
-    # Start a server named to match this test module, to guarantee uniqueness
-    {:ok, pid} = Environment.start_link(__MODULE__)
-    {:ok, sensor: pid}
+  setup %{test: test} do
+    # Start a server named to match the test, to guarantee uniqueness
+    {:ok, sensor} = Environment.start_link(test)
+    {:ok, sensor: sensor}
   end
 
   test "returns the latest value for humidity", %{sensor: sensor} do

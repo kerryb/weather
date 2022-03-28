@@ -22,10 +22,10 @@ defmodule WeatherFirmware.Sensors.WindVaneTest do
     337.5 => 0.823
   }
 
-  setup do
-    # Start a server named to match this test module, to guarantee uniqueness
-    {:ok, pid} = WindVane.start_link(__MODULE__)
-    {:ok, wind_vane: pid}
+  setup %{test: test} do
+    # Start a server named to match the test, to guarantee uniqueness
+    {:ok, wind_vane} = WindVane.start_link(test)
+    {:ok, wind_vane: wind_vane}
   end
 
   describe "WeatherFirmware.Sensors.WindVane.direction/1" do
