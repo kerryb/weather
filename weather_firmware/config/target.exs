@@ -70,7 +70,7 @@ config :mdns_lite,
   # because otherwise any of the devices may respond to nerves.local leading to
   # unpredictable behavior.
 
-  hosts: [:hostname, "nerves"],
+  hosts: [:hostname, "weather"],
   ttl: 120,
 
   # Advertise the following services over mDNS.
@@ -94,7 +94,7 @@ config :mdns_lite,
 
 # Config for the weather_ui application
 config :weather_ui, WeatherUiWeb.Endpoint,
-  url: [host: "nerves.local"],
+  url: [host: "weather.local"],
   render_errors: [view: WeatherUiWeb.ErrorView, accepts: ~w(html json), layout: false],
   pubsub_server: WeatherUi.PubSub,
   live_view: [signing_salt: "PP89creq"],
