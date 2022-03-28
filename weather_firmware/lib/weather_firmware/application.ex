@@ -6,6 +6,7 @@ defmodule WeatherFirmware.Application do
   use Application
   alias WeatherFirmware.Sensors.Anemometer
   alias WeatherFirmware.Sensors.Environment
+  alias WeatherFirmware.Sensors.RainGauge
   alias WeatherFirmware.Sensors.WindVane
 
   @impl Application
@@ -21,6 +22,7 @@ defmodule WeatherFirmware.Application do
         # {WeatherFirmware.Worker, arg},
         Anemometer,
         Environment,
+        RainGauge,
         WindVane
       ] ++ children(target())
 

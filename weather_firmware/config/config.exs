@@ -10,7 +10,7 @@ Application.start(:nerves_bootstrap)
 
 config :weather_firmware,
   target: Mix.target(),
-  pins: %{anemometer: 4}
+  pins: %{anemometer: 4, rain_gauge: 5}
 
 # Customize non-Elixir parts of the firmware. See
 # https://hexdocs.pm/nerves/advanced-configuration.html for details.
