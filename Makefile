@@ -1,5 +1,5 @@
 .PHONY: all asdf assets bootstrap burn check-formatted clean credo deps \
-	dialyzer firmware format help setup test update-deps
+	dialyzer firmware format help setup test update-deps upload
 all: check-formatted credo dialyzer test # Help: Run tests and other checks
 asdf: # Help: Install correct Erlang/OTP and Elixir versions using asdf
 	asdf install
@@ -41,3 +41,5 @@ test: # Help: Run tests in firmware and UI projects
 update-deps: # Help: Update dependencies for firmware and UI projects
 	cd weather_ui && mix deps.update --all
 	cd weather_firmware && MIX_TARGET=rpi0 mix deps.update --all
+upload: # Help: Update the firmware over ssh
+	cd weather_firmware && MIX_ENV=prod MIX_TARGET=rpi0 mix upload weather.local
