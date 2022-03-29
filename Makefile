@@ -1,4 +1,5 @@
-.PHONY: all asdf assets bootstrap burn check-formatted clean credo deps dialyzer format help setup test update-deps
+.PHONY: all asdf assets bootstrap burn check-formatted clean credo deps \
+	dialyzer firmware format help setup test update-deps
 all: check-formatted credo dialyzer test # Help: Run tests and other checks
 asdf: # Help: Install correct Erlang/OTP and Elixir versions using asdf
 	asdf install
@@ -6,8 +7,8 @@ assets: # Help: Build web assets for UI app
 	cd weather_ui && mix assets.deploy
 bootstrap: # Help: Install the nerves bootstrap archive
 	mix archive.install hex nerves_bootstrap
-burn: assets # Help: Generate firmware and burn to an SD card
-	cd weather_firmware && MIX_ENV=prod MIX_TARGET=rpi0 mix firmware.burn
+burn: # Help: Burn firmware to an SD card
+	cd weather_firmware && MIX_ENV=prod MIX_TARGET=rpi0 mix burn
 check-formatted: # Help: Check all Elixir source files are correctly formatted
 	cd weather_ui && mix format --check-formatted
 	cd weather_firmware && mix format --check-formatted
@@ -23,6 +24,8 @@ deps: # Help: Download dependencies for firmware and UI projects
 dialyzer: # Help: Run dialyxir on firmware and UI projects
 	cd weather_ui && mix dialyzer
 	cd weather_firmware && mix dialyzer
+firmware: assets # Help: Generate firmware
+	cd weather_firmware && MIX_ENV=prod MIX_TARGET=rpi0 mix firmware
 format: # Help: Format all Elixir source files
 	cd weather_ui && mix format
 	cd weather_firmware && mix format
