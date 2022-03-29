@@ -24,7 +24,7 @@ defmodule WeatherFirmware.Sensors.Anemometer do
   end
 
   @doc """
-  Returns the latest windspeed reading, in m/s.
+  Returns the latest wind speed reading, in m/s.
   """
   @spec speed(GenServer.name()) :: float()
   def speed(name \\ __MODULE__) do
@@ -38,8 +38,15 @@ defmodule WeatherFirmware.Sensors.Anemometer do
 
   @impl GenServer
   def handle_info({:circuits_gpio, @pin, timestamp, 0}, state) do
-    {:noreply,
-     %{state | last_pulse: timestamp, speed: calculate_speed(state.last_pulse, timestamp)}}
+    speed = calculate_speed(state.last_pulse, timestamp)
+
+    Phoenix.PubSub.broadcast!(
+      WeatherUi.PubSub,
+      "sensors",
+      {:wind_speed, speed, :metres_per_second}
+    )
+
+    {:noreply, %{state | last_pulse: timestamp, speed: speed}}
   end
 
   def handle_info(_message, state), do: {:noreply, state}

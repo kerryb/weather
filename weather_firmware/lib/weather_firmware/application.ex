@@ -20,6 +20,7 @@ defmodule WeatherFirmware.Application do
         # Children for all targets
         # Starts a worker by calling: WeatherFirmware.Worker.start_link(arg)
         # {WeatherFirmware.Worker, arg},
+        {Phoenix.PubSub, name: WeatherUi.PubSub},
         Anemometer,
         Environment,
         RainGauge,

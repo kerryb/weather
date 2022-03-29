@@ -10,8 +10,10 @@ defmodule WeatherUi.Application do
     children = [
       # Start the Telemetry supervisor
       WeatherUiWeb.Telemetry,
-      # Start the PubSub system
-      {Phoenix.PubSub, name: WeatherUi.PubSub},
+      # Don't start the PubSub system, as it's already started in
+      # weather_firmware. Not sure how to handle this if we need it running
+      # when only starting WeatherUi in isolation.
+      # {Phoenix.PubSub, name: WeatherUi.PubSub},
       # Start the Endpoint (http/https)
       WeatherUiWeb.Endpoint
       # Start a worker by calling: WeatherUi.Worker.start_link(arg)

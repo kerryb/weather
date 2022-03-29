@@ -42,6 +42,7 @@ defmodule WeatherFirmware.MixProject do
       {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
       {:nerves, "~> 1.7", runtime: false},
+      {:phoenix_pubsub, "~> 2.0"},
       {:ring_logger, "~> 0.8"},
       {:shoehorn, "~> 0.8"},
       {:toolshed, "~> 0.2"},

@@ -102,7 +102,6 @@ config :weather_ui, WeatherUiWeb.Endpoint,
   cache_static_manifest: "priv/static/cache_manifest.json",
   secret_key_base: "mA5hW8EM6oNDsYK2RmkglxtNA4yy6wLffNZhOi3Tggi5VZf5QJu3EQaYxGIHrAT1",
   check_origin: false,
-  pubsub_server: Ui.PubSub,
   # Start the server since we're running in a release instead of through `mix`
   server: true,
   # Nerves root filesystem is read-only, so disable the code reloader

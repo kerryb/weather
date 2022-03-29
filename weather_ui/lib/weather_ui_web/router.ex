@@ -17,7 +17,7 @@ defmodule WeatherUiWeb.Router do
   scope "/", WeatherUiWeb do
     pipe_through :browser
 
-    get "/", PageController, :index
+    live "/", DashboardLive
   end
 
   # Other scopes may use custom stacks.

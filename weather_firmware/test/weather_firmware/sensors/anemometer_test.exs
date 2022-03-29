@@ -10,10 +10,19 @@ defmodule WeatherFirmware.Sensors.AnemometerTest do
     {:ok, anemometer: anemometer}
   end
 
-  test "calculates the instantaneous windspeed based on the interval between pulses (3Hz = 2m/s)",
+  test "calculates the instantaneous wind speed based on the interval between pulses (3Hz = 2m/s)",
        %{anemometer: anemometer} do
     send(anemometer, {:circuits_gpio, @pin, 10_000_000_000, 0})
     send(anemometer, {:circuits_gpio, @pin, 10_333_333_333, 0})
     assert_in_delta Anemometer.speed(anemometer), 2, 0.001
+  end
+
+  test "broadcasts a pubsub message when the wind speed changes", %{anemometer: anemometer} do
+    :ok = Phoenix.PubSub.subscribe(WeatherUi.PubSub, "sensors")
+    send(anemometer, {:circuits_gpio, @pin, 10_000_000_000, 0})
+    assert_receive {:wind_speed, _speed, :metres_per_second}
+    send(anemometer, {:circuits_gpio, @pin, 10_333_333_333, 0})
+    assert_receive {:wind_speed, speed, :metres_per_second}
+    assert_in_delta speed, 2, 0.001
   end
 end
