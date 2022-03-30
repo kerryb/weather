@@ -10,19 +10,32 @@ defmodule WeatherFirmware.Sensors.AnemometerTest do
     {:ok, anemometer: anemometer}
   end
 
-  test "calculates the instantaneous wind speed based on the interval between pulses (3Hz = 2m/s)",
-       %{anemometer: anemometer} do
-    send(anemometer, {:circuits_gpio, @pin, 10_000_000_000, 0})
-    send(anemometer, {:circuits_gpio, @pin, 10_333_333_333, 0})
-    assert_in_delta Anemometer.speed(anemometer), 2, 0.001
-  end
+  describe "WeatherFirmware.Sensors.Anemometer" do
+    test "initially returns a wind speed of zero", %{anemometer: anemometer} do
+      assert Anemometer.speed(anemometer) == 0
+    end
 
-  test "broadcasts a pubsub message when the wind speed changes", %{anemometer: anemometer} do
-    :ok = Phoenix.PubSub.subscribe(WeatherUi.PubSub, "sensors")
-    send(anemometer, {:circuits_gpio, @pin, 10_000_000_000, 0})
-    assert_receive {:wind_speed, _speed, :metres_per_second}
-    send(anemometer, {:circuits_gpio, @pin, 10_333_333_333, 0})
-    assert_receive {:wind_speed, speed, :metres_per_second}
-    assert_in_delta speed, 2, 0.001
+    test "calculates the wind speed based on the latest ten pulses (3Hz = 2m/s)", %{
+      anemometer: anemometer
+    } do
+      # we only care about the first and eleventh (10 gaps)
+      send(anemometer, {:circuits_gpio, @pin, 10_000_000_000, 0})
+
+      for n <- 1..9 do
+        send(anemometer, {:circuits_gpio, @pin, 10_000_000_000 + n * 10_000_000, 0})
+      end
+
+      send(anemometer, {:circuits_gpio, @pin, 10_333_333_333, 0})
+
+      assert_in_delta Anemometer.speed(anemometer), 20, 0.001
+    end
+
+    # TODO: only check for messages from 'our' anemometer; check speed value
+    test "broadcasts a pubsub message ten times a second" do
+      :ok = Phoenix.PubSub.subscribe(WeatherUi.PubSub, "sensors")
+      assert_receive {:wind_speed, 0, :metres_per_second}, 150
+    end
+
+    # TODO: handle wind speed reducing to zero
   end
 end

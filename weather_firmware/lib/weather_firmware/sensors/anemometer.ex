@@ -10,6 +10,7 @@ defmodule WeatherFirmware.Sensors.Anemometer do
   alias Circuits.GPIO
 
   @pin Application.compile_env!(:weather_firmware, :pins).anemometer
+  @pulses_to_average 10
 
   @spec start_link(GenServer.name()) :: GenServer.on_start()
   def start_link(name \\ __MODULE__) do
@@ -20,7 +21,10 @@ defmodule WeatherFirmware.Sensors.Anemometer do
   def init(_opts) do
     {:ok, input} = GPIO.open(@pin, :input)
     :ok = GPIO.set_interrupts(input, :falling)
-    {:ok, %{input: input, last_pulse: 0, speed: 0}}
+    #  measuring gaps, so we need n + 1 values to average over n
+    buffer = RingBuffer.new(@pulses_to_average + 1)
+    Process.send_after(self(), :broadcast_speed, 100)
+    {:ok, %{input: input, buffer: buffer}}
   end
 
   @doc """
@@ -33,27 +37,37 @@ defmodule WeatherFirmware.Sensors.Anemometer do
 
   @impl GenServer
   def handle_call(:speed, _sender, state) do
-    {:reply, state.speed, state}
+    {:reply, calculate_speed(state.buffer), state}
   end
 
   @impl GenServer
   def handle_info({:circuits_gpio, @pin, timestamp, 0}, state) do
-    speed = calculate_speed(state.last_pulse, timestamp)
+    {:noreply, %{state | buffer: RingBuffer.put(state.buffer, timestamp)}}
+  end
+
+  def handle_info(:broadcast_speed, state) do
+    Process.send_after(self(), :broadcast_speed, 100)
 
     Phoenix.PubSub.broadcast!(
       WeatherUi.PubSub,
       "sensors",
-      {:wind_speed, speed, :metres_per_second}
+      {:wind_speed, calculate_speed(state.buffer), :metres_per_second}
     )
 
-    {:noreply, %{state | last_pulse: timestamp, speed: speed}}
+    {:noreply, state}
   end
 
   def handle_info(_message, state), do: {:noreply, state}
 
   @nanoseconds_per_second 1_000_000_000
   @hz_to_metres_per_second 2 / 3
-  defp calculate_speed(timestamp_1, timestamp_2) do
-    @hz_to_metres_per_second / ((timestamp_2 - timestamp_1) / @nanoseconds_per_second)
+
+  # return zero until we have a full buffer
+  defp calculate_speed(%{evicted: nil}), do: 0
+
+  defp calculate_speed(buffer) do
+    @hz_to_metres_per_second /
+      ((RingBuffer.newest(buffer) - RingBuffer.oldest(buffer)) / @pulses_to_average /
+         @nanoseconds_per_second)
   end
 end
